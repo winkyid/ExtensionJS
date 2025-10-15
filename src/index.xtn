@@ -1,0 +1,64 @@
+// src/index.xtn
+
+// A simple, temporary helper to create elements with declarative attributes.
+// This will be part of the core framework engine later.
+function E(tag, attributes = {}, children = []) {
+    const el = document.createElement(tag);
+    for (const key in attributes) {
+        // For data-* attributes, use setAttribute
+        if (key.startsWith('data-')) {
+            el.setAttribute(key, attributes[key]);
+        } else {
+            el[key] = attributes[key];
+        }
+    }
+    for (const child of children) {
+        if (typeof child === 'string') {
+            el.appendChild(document.createTextNode(child));
+        } else if (child) {
+            el.appendChild(child);
+        }
+    }
+    return el;
+}
+
+const pageContent = E('div', {}, [
+    E('h1', { textContent: 'ExtensionJS Full Framework' }),
+    E('p', { textContent: 'This page is rendered from an .xtn file, which is pure JavaScript.' }),
+    
+    E('div', { className: 'controls' }, [
+        E('h3', { textContent: 'Notification Module' }),
+        E('button', {
+            className: 'primary',
+            'data-extensionjs-module': 'notification',
+            'data-extensionjs-action': 'show',
+            'data-extensionjs-options': '{"message": "Success!", "type": "success"}'
+        }, ['Show Success'])
+    ]),
+    
+    E('div', { className: 'controls' }, [
+        E('h3', { textContent: 'Modal Module' }),
+        E('button', {
+            className: 'secondary',
+            'data-extensionjs-module': 'modal',
+            'data-extensionjs-action': 'show',
+            'data-extensionjs-options': `{
+                "title": "Declarative Action",
+                "html": "This modal triggers a notification.",
+                "buttons": [
+                    { "text": "Proceed", "type": "primary", "action": "notification.show", "actionOptions": { "message": "Proceed was clicked!" } },
+                    { "text": "Cancel", "type": "secondary" }
+                ]
+            }`
+        }, ['Show Advanced Modal'])
+    ])
+]);
+
+// The build process will ensure a div with id="app" exists.
+// The engine will eventually handle the rendering. For now, append directly.
+document.addEventListener('DOMContentLoaded', () => {
+    const appRoot = document.getElementById('app');
+    if (appRoot) {
+        appRoot.appendChild(pageContent);
+    }
+});

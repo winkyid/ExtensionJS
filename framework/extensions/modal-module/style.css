@@ -1,0 +1,136 @@
+/* extensions/modal-module/style.css - macOS Style */
+
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    .modal-panel {
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        backdrop-filter: blur(20px) saturate(180%);
+        background-color: rgba(240, 240, 240, 0.65); /* Translucent background for vibrancy */
+    }
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Darker overlay to emphasize the modal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+}
+
+.modal-panel {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f0f0; /* Fallback for older browsers */
+    border-radius: 14px; /* macOS standard corner radius */
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 20px 50px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 380px; /* macOS dialogs are often narrower */
+    overflow: hidden;
+    text-align: center; /* Center align text for dialogs */
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-type-custom {
+    text-align: left; /* Reset for custom modals */
+}
+
+.modal-panel.visible {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-header {
+    padding: 24px 20px 8px 20px;
+    border-bottom: none; /* No border in simple dialogs */
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+/* Hide the close button on alert/confirm for a cleaner look */
+.modal-type-dialog .modal-btn-close {
+    display: none;
+}
+
+.modal-btn-close {
+    display: block; /* Show by default */
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    line-height: 28px;
+    text-align: center;
+    cursor: pointer;
+    color: #888;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+
+.modal-body {
+    padding: 0px 20px 20px 20px;
+    line-height: 1.5;
+    font-size: 0.85rem;
+    color: rgba(60, 60, 67, 0.78);
+}
+
+.modal-body p {
+    margin: 0;
+}
+
+.modal-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    border-top: 1px solid rgba(60, 60, 67, 0.29);
+    padding: 0;
+    background: none;
+}
+
+/* Single button in footer (for alerts) */
+.modal-footer:has(.modal-btn-ok:only-child) {
+    grid-template-columns: 1fr;
+}
+
+.modal-footer button {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 1.05rem;
+    padding: 12px 10px;
+    color: #007aff;
+    transition: background-color 0.2s;
+}
+
+.modal-footer button:hover {
+    background-color: rgba(0, 122, 255, 0.1);
+}
+
+.modal-footer button:active {
+    background-color: rgba(0, 122, 255, 0.2);
+    transform: none;
+}
+
+.modal-btn-cancel {
+    border-right: 1px solid rgba(60, 60, 67, 0.29);
+}
+
+.modal-btn-confirm, .modal-btn-ok {
+    font-weight: 600; /* Bolder primary action */
+}
