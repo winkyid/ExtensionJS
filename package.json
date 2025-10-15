@@ -1,6 +1,6 @@
 {
   "name": "@winkyid/extensionjs",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A lightweight and modular web development framework.",
   "main": "server.js",
   "scripts": {

@@ -5,11 +5,12 @@ const path = require('path');
 
 // The source is the package's own directory
 const sourceDir = __dirname;
-// The destination is the project installing the package
-const destDir = process.cwd();
+// The destination is the project root, found by going up 3 levels from the script's location in node_modules
+const destDir = path.resolve(__dirname, '..', '..', '..');
 
-// A simple check to prevent the script from running on itself during development
-if (sourceDir === destDir) {
+// A check to ensure we're not trying to copy into the node_modules folder itself or some other weird state
+if (path.basename(destDir) === 'node_modules') {
+    console.log('Postinstall script running in an unexpected directory. Aborting.');
     return;
 }
 
@@ -27,7 +28,7 @@ itemsToCopy.forEach(item => {
     const destPath = path.join(destDir, item);
 
     if (fs.existsSync(destPath)) {
-        console.log(`- '${item}' already exists. Skipping.`);
+        console.log(`- '${item}' already exists in your project. Skipping.`);
     } else {
         try {
             fs.cpSync(sourcePath, destPath, { recursive: true });
