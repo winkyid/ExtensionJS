@@ -1,13 +1,31 @@
 {
-  "name": "custom-kebutuhanwebdev",
+  "name": "@winkyid/extensionjs",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A lightweight and modular web development framework.",
+  "main": "server.js",
+  "bin": {
+    "extensionjs": "./server.js"
+  },
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winkyid/ExtensionJS.git"
+  },
+  "files": [
+    "framework/",
+    "src/",
+    "server.js",
+    "build.js"
+  ],
+  "keywords": [
+    "framework",
+    "web",
+    "modular"
+  ],
+  "author": "winkyid",
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.2",
